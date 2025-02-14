@@ -10,9 +10,9 @@ const login = async ({email, senha}) => {
 
   const passCompare = await bcrypt.compare(senha, user.senha)
 
-  if (!user || !passCompare) throw new Error("Senha ou usuário incorreto.")
+  if (!user || !passCompare) throw new Error("Senha ou email incorreto.")
 
-  const token = await jwt.sign({name: user.nome}, secret, {expiresIn: '1h'})
+  const token = await jwt.sign({id: user.id, name: user.nome}, secret, {expiresIn: '1h'})
   console.log(token)
 
   return { nome: user.nome, email: user.email, token }
@@ -30,9 +30,12 @@ const verifyToken = (req, res, next) => {
 
   try {
     jwt.verify(token, secret)
+    const datatoken = jwt.decode(token, secret)
+    req.user = { id: datatoken.id }
     next()
 
   } catch (error) {
+    console.log(error)
     res.status(403).json({
       message: "Token inválido"
     })

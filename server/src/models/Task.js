@@ -2,33 +2,32 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
 
-  const User = sequelize.define(
-    'User',
+  const Task = sequelize.define(
+    'Task',
     {
       id : {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      nome:{
+      data:{
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      titulo:{
         type: DataTypes.STRING,
         allowNull: false
       },
-      sobrenome:{
+      resumo_tarefa:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull:false
       },
-      email:{
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false
-      },
-      senha:{
+      status:{
         type: DataTypes.STRING,
         allowNull:false
       }
     }
   )
 
-  return User
+  return Task
 }

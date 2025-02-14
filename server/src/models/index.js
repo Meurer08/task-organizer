@@ -16,6 +16,11 @@ Object.keys(models).forEach((modelName) => {
     models[modelName].associate(models);
   }
 });
-  
+
+const User = require("./User.js") (sequelize)
+const Task = require('./Task')(sequelize)
+
+User.hasMany(Task)
+Task.belongsTo(User)
 
 module.exports = {sequelize, models}
